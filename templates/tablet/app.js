@@ -139,6 +139,29 @@ class NotificationSender {
         const data = await response.json();
         console.log("✅ Backend response:", data);
 
+        // LocalStorage'a yaz (cross-tab communication için)
+        try {
+          const notificationData = {
+            notification: {
+              title: "Servis Talebi",
+              body: `${salonName} salonundan servis talebi`,
+            },
+            data: {
+              salon: salonName,
+              timestamp: Date.now().toString(),
+              type: "service-request",
+            },
+            timestamp: Date.now(),
+          };
+          localStorage.setItem(
+            "quickserve-notification",
+            JSON.stringify(notificationData)
+          );
+          console.log("✅ LocalStorage'a yazıldı:", notificationData);
+        } catch (lsError) {
+          console.warn("⚠️ LocalStorage yazma hatası:", lsError);
+        }
+
         // LocalStorage ile cross-tab notification (fallback)
         const notificationData = {
           notification: {
