@@ -1,31 +1,55 @@
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-node_modules/
-npm-debug.log
+# Git
 .git
 .gitignore
-README.md
-DEPLOY.md
-COOLIFY_DEPLOY.md
-functions/
-staff/
-tablet/
-assets/
-*.md
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+.venv
+venv/
+
+# Environment
+.env
 .env.local
-.env.development
-functions-example.js
+.env.production
+
+# Firebase
+firebase_service_account.json
+firebase-debug.log
+.firebase/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Documentation
+README.md
+*.md
+DEPLOY.md
+GIT_DEPLOY.md
+COOLIFY_DEPLOY.md
+
+# Scripts
 deploy.sh
 deploy.bat
-firebase.json
-.firebaserc
-database-rules.json
-server.js
+
+# Node (eğer varsa)
+node_modules/
 package.json
 package-lock.json
