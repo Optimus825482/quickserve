@@ -19,20 +19,31 @@ const vapidKey =
 // Firebase'i initialize et
 async function initializeFirebase() {
   let app;
-  let messaging;
+  let messaging = null;
   try {
     // Firebase App'i başlat
     app = firebase.initializeApp(firebaseConfig);
     console.log("✅ Firebase initialized");
 
-    // FCM'i başlat
-    messaging = firebase.messaging();
-    console.log("✅ Firebase Messaging initialized");
+    // Service Worker kontrolü
+    if (!("serviceWorker" in navigator)) {
+      console.warn("⚠️ Service Worker desteklenmiyor");
+      return { app, messaging: null };
+    }
+
+    // FCM'i başlat (Service Worker ile)
+    try {
+      messaging = firebase.messaging();
+      console.log("✅ Firebase Messaging initialized");
+    } catch (msgError) {
+      console.warn("⚠️ Firebase Messaging başlatılamadı:", msgError);
+      console.log("ℹ️ LocalStorage polling kullanılacak");
+    }
 
     return { app, messaging };
   } catch (error) {
     console.error("❌ Firebase initialization error:", error);
-    throw error;
+    return { app: null, messaging: null };
   }
 }
 
