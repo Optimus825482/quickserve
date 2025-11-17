@@ -1,0 +1,245 @@
+/* QuickServe - Tablet Arayüzü Stilleri */
+/* Merit Royal Diamond Otel */
+
+/* CSS Değişkenleri */
+:root {
+  --primary: #1e40af;
+  --secondary: #7c3aed;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --background: #f9fafb;
+  --surface: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Salon Grid Layout */
+.salon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Salon Kartı */
+.salon-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 4px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.salon-card:active {
+  transform: scale(0.98);
+}
+
+.salon-card.selected {
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+  transform: scale(1.02);
+}
+
+/* Salon İkonu */
+.salon-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+/* Salon Adı */
+.salon-name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Primary Buton */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 1.5rem 4rem;
+  border-radius: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+}
+
+.btn-primary:not(:disabled):active {
+  transform: scale(0.95);
+}
+
+.btn-primary:disabled {
+  background: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Secondary Buton */
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:active {
+  transform: scale(0.95);
+}
+
+/* Spinner */
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 3rem;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.modal-content.success .modal-title {
+  color: var(--success);
+}
+
+.modal-content.error .modal-title {
+  color: var(--error);
+}
+
+.modal-text {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive - Landscape Tablet */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .salon-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
+  }
+
+  .salon-card {
+    min-height: 180px;
+  }
+}
+
+/* Responsive - Portrait Tablet */
+@media (max-width: 768px) {
+  .salon-grid {
+    gap: 1.5rem;
+  }
+
+  .salon-card {
+    padding: 2rem 1.5rem;
+    min-height: 160px;
+  }
+
+  .salon-icon {
+    font-size: 3rem;
+  }
+
+  .salon-name {
+    font-size: 1.5rem;
+  }
+
+  .btn-primary {
+    padding: 1.25rem 3rem;
+    font-size: 1.25rem;
+    min-width: 250px;
+  }
+}

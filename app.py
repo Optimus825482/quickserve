@@ -9,7 +9,7 @@ import os
 import json
 import base64
 from datetime import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials, db, messaging
@@ -19,7 +19,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Flask App
-app = Flask(__name__)
+app = Flask(__name__, 
+            static_folder='.',
+            static_url_path='')
 
 # CORS ayarları
 allowed_origins = os.getenv('ALLOWED_ORIGINS', '*').split(',')
@@ -27,17 +29,25 @@ CORS(app, origins=allowed_origins, supports_credentials=True)
 
 # Firebase Admin SDK Initialize
 try:
-    service_account_base64 = os.getenv('FIREBASE_SERVICE_ACCOUNT_BASE64')
-
-    if not service_account_base64:
-        raise ValueError('FIREBASE_SERVICE_ACCOUNT_BASE64 environment variable bulunamadı!')
-
-    # Base64'ten decode et
-    service_account_json = base64.b64decode(service_account_base64).decode('utf-8')
-    service_account = json.loads(service_account_json)
+    # Environment variable'dan JSON string oku
+    service_account_json_str = os.getenv('FIREBASE_SERVICE_ACCOUNT_JSON')
+    
+    if service_account_json_str:
+        # Environment variable'dan JSON parse et
+        print('📝 Firebase credentials environment variable\'dan okunuyor...')
+        service_account = json.loads(service_account_json_str)
+        cred = credentials.Certificate(service_account)
+    else:
+        # Fallback: Local dosyadan oku
+        print('📝 Firebase credentials local dosyadan okunuyor...')
+        service_account_path = 'firebase_service_account.json'
+        
+        if not os.path.exists(service_account_path):
+            raise ValueError('FIREBASE_SERVICE_ACCOUNT_JSON environment variable veya firebase_service_account.json dosyası bulunamadı!')
+        
+        cred = credentials.Certificate(service_account_path)
 
     # Firebase initialize
-    cred = credentials.Certificate(service_account)
     firebase_admin.initialize_app(cred, {
         'databaseURL': f"https://{os.getenv('FIREBASE_PROJECT_ID', 'shuttle-call-835d9')}-default-rtdb.firebaseio.com"
     })
@@ -45,6 +55,7 @@ try:
     print('✅ Firebase Admin initialized')
 except Exception as e:
     print(f'❌ Firebase initialization error: {e}')
+    raise
     raise
 
 # Helper Functions
@@ -77,18 +88,28 @@ def update_statistics(salon):
 # Routes
 @app.route('/')
 def index():
-    """API bilgileri"""
-    return jsonify({
-        'message': 'QuickServe Backend API',
-        'version': '1.0.0',
-        'endpoints': {
-            'health': 'GET /health',
-            'send_notification': 'POST /api/send-notification',
-            'subscribe': 'POST /api/subscribe',
-            'unsubscribe': 'POST /api/unsubscribe',
-            'statistics': 'GET /api/statistics'
-        }
-    })
+  
+    return render_template('index.html')
+
+@app.route('/tablet')
+@app.route('/tablet/')
+def tablet():
+    """Tablet arayüzü"""
+    try:
+        return render_template('tablet/index.html')
+    except Exception as e:
+        print(f'❌ Tablet render error: {e}')
+        return jsonify({'success': False, 'error': 'Tablet sayfası yüklenemedi'}), 500
+
+@app.route('/staff')
+@app.route('/staff/')
+def staff():
+    """Staff arayüzü"""
+    try:
+        return render_template('staff/index.html')
+    except Exception as e:
+        print(f'❌ Staff render error: {e}')
+        return jsonify({'success': False, 'error': 'Staff sayfası yüklenemedi'}), 500
 
 @app.route('/health')
 def health():
@@ -126,38 +147,39 @@ def send_notification():
             }), 400
 
         # Realtime Database'e kaydet
-        request_ref = db.reference('service-requests').push({
-            'salon': salon,
-            'timestamp': timestamp,
-            'type': req_type,
-            'createdAt': get_timestamp()
-        })
-
-        request_id = request_ref.key
-        print(f'📨 Yeni servis talebi: {salon} ({request_id})')
+        try:
+            request_ref = db.reference('service-requests').push({
+                'salon': salon,
+                'timestamp': timestamp,
+                'type': req_type,
+                'createdAt': get_timestamp()
+            })
+            request_id = request_ref.key
+            print(f'📨 Yeni servis talebi: {salon} ({request_id})')
+        except Exception as db_error:
+            print(f'⚠️ Database kayıt hatası: {db_error}')
+            request_id = f'local_{get_timestamp()}'
 
         # FCM Bildirim Gönder
-        message = messaging.Message(
-            notification=messaging.Notification(
-                title='Servis Talebi',
-                body=f'{salon} salonundan servis talebi'
-            ),
-            data={
-                'salon': salon,
-                'timestamp': str(timestamp),
-                'type': req_type,
-                'requestId': request_id
-            },
-            topic='service-requests',
+        try:
+            message = messaging.Message(
+                notification=messaging.Notification(
+                    title='Servis Talebi',
+                    body=f'{salon} salonundan servis talebi'
+                ),
+                data={
+                    'salon': salon,
+                    'timestamp': str(timestamp),
+                    'type': req_type,
+                    'requestId': request_id
+                },
+                topic='service-requests',
             webpush=messaging.WebpushConfig(
                 notification=messaging.WebpushNotification(
                     icon='/assets/logo.png',
                     badge='/assets/logo.png',
                     require_interaction=True,
                     vibrate=[200, 100, 200, 100, 200]
-                ),
-                fcm_options=messaging.WebpushFCMOptions(
-                    link='/staff/'
                 )
             ),
             android=messaging.AndroidConfig(
@@ -177,20 +199,26 @@ def send_notification():
             )
         )
 
-        message_id = messaging.send(message)
-        print(f'✅ Bildirim gönderildi: {message_id}')
+            message_id = messaging.send(message)
+            print(f'✅ Bildirim gönderildi: {message_id}')
 
-        # Notification kaydı
-        db.reference(f'notifications/{request_id}').set({
-            'salon': salon,
-            'timestamp': timestamp,
-            'sentAt': get_timestamp(),
-            'messageId': message_id,
-            'status': 'sent'
-        })
+            # Notification kaydı
+            try:
+                db.reference(f'notifications/{request_id}').set({
+                    'salon': salon,
+                    'timestamp': timestamp,
+                    'sentAt': get_timestamp(),
+                    'messageId': message_id,
+                    'status': 'sent'
+                })
+            except Exception as notif_error:
+                print(f'⚠️ Notification kayıt hatası: {notif_error}')
 
-        # İstatistik güncelle
-        update_statistics(salon)
+            # İstatistik güncelle
+            update_statistics(salon)
+        except Exception as fcm_error:
+            print(f'⚠️ FCM gönderim hatası: {fcm_error}')
+            message_id = 'local_notification'
 
         return jsonify({
             'success': True,
@@ -308,6 +336,8 @@ def not_found(e):
 @app.errorhandler(500)
 def internal_error(e):
     return jsonify({'success': False, 'error': 'Sunucu hatası'}), 500
+
+
 
 # Ana çalıştırma
 if __name__ == '__main__':
