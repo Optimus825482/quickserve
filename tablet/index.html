@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#1e40af" />
+    <meta
+      name="description"
+      content="QuickServe - Merit Royal Diamond Otel Servis Talep Sistemi"
+    />
+
+    <title>QuickServe - Servis Talebi</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-6">
+      <div class="max-w-7xl mx-auto flex items-center justify-center">
+        <img src="assets/logo.png" alt="Merit Royal Diamond" class="h-16" />
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+      <!-- Başlık -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">Servis Talebi</h1>
+        <p class="text-lg text-gray-600">Lütfen toplantı salonunuzu seçin</p>
+      </div>
+
+      <!-- Salon Seçim Ekranı -->
+      <div id="salon-selection" class="salon-grid">
+        <!-- Barnabas Salonu -->
+        <div class="salon-card" data-salon="Barnabas">
+          <div class="salon-icon">🏛️</div>
+          <h2 class="salon-name">Barnabas</h2>
+        </div>
+
+        <!-- Zefiros Salonu -->
+        <div class="salon-card" data-salon="Zefiros">
+          <div class="salon-icon">🌊</div>
+          <h2 class="salon-name">Zefiros</h2>
+        </div>
+
+        <!-- Kourion Salonu -->
+        <div class="salon-card" data-salon="Kourion">
+          <div class="salon-icon">🏺</div>
+          <h2 class="salon-name">Kourion</h2>
+        </div>
+
+        <!-- Karmi Salonu -->
+        <div class="salon-card" data-salon="Karmi">
+          <div class="salon-icon">⚓</div>
+          <h2 class="salon-name">Karmi</h2>
+        </div>
+      </div>
+
+      <!-- Servis Talep Butonu -->
+      <div class="text-center mt-8">
+        <button id="request-btn" class="btn-primary" disabled>
+          <span id="btn-text">Servis Talep Et</span>
+          <span id="btn-spinner" class="spinner hidden">⏳</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Başarı Modal -->
+    <div id="success-modal" class="modal hidden">
+      <div class="modal-content success">
+        <div class="modal-icon">✅</div>
+        <h2 class="modal-title">Talebiniz İletildi</h2>
+        <p class="modal-text">
+          Servis personelimiz en kısa sürede yanınızda olacak
+        </p>
+      </div>
+    </div>
+
+    <!-- Hata Modal -->
+    <div id="error-modal" class="modal hidden">
+      <div class="modal-content error">
+        <div class="modal-icon">❌</div>
+        <h2 class="modal-title">Bağlantı Hatası</h2>
+        <p class="modal-text">Lütfen tekrar deneyin</p>
+        <button id="retry-btn" class="btn-secondary mt-4">Tekrar Dene</button>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+
+    <!-- Configuration -->
+    <script src="../config.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+  </body>
+</html>

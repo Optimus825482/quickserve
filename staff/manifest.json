@@ -1,0 +1,29 @@
+{
+  "name": "QuickServe - Personel",
+  "short_name": "QuickServe",
+  "description": "Merit Royal Diamond Otel Servis Talep Sistemi - Personel Uygulaması",
+  "start_url": "/staff/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait",
+  "scope": "/staff/",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business"],
+  "lang": "tr",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}

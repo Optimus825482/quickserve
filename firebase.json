@@ -1,0 +1,23 @@
+{
+  "database": {
+    "rules": "database-rules.json"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/staff/**",
+        "destination": "/staff/index.html"
+      },
+      {
+        "source": "/tablet/**",
+        "destination": "/tablet/index.html"
+      }
+    ]
+  }
+}

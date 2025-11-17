@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#1e40af" />
+    <meta
+      name="description"
+      content="QuickServe Personel - Merit Royal Diamond Otel"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="QuickServe" />
+
+    <title>QuickServe - Personel</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="assets/icon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="assets/icon-512.png"
+    />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/apple-touch-icon.png"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Hoş Geldiniz Ekranı -->
+    <div id="welcome-screen" class="screen">
+      <div class="container">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+          <img
+            src="assets/logo.png"
+            alt="Merit Royal Diamond"
+            class="logo mx-auto"
+          />
+        </div>
+
+        <!-- Başlık -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl font-bold text-gray-800 mb-2">
+            QuickServe Personel
+          </h1>
+          <p class="text-lg text-gray-600">Servis taleplerini anında alın</p>
+        </div>
+
+        <!-- Bildirim İzni Butonu -->
+        <div class="text-center">
+          <button id="enable-notifications-btn" class="btn-primary">
+            <span class="text-2xl mr-2">🔔</span>
+            Bildirimlere İzin Ver
+          </button>
+          <p class="text-sm text-gray-500 mt-4">
+            Servis taleplerini almak için bildirim izni gereklidir
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ana Ekran (Dashboard) -->
+    <div id="dashboard-screen" class="screen hidden">
+      <!-- Header -->
+      <header class="bg-white shadow-sm py-4 px-6">
+        <div class="flex items-center justify-between">
+          <img src="assets/logo.png" alt="Merit Royal Diamond" class="h-12" />
+          <div id="connection-status" class="status-badge online">
+            <span class="status-dot"></span>
+            <span class="status-text">Çevrimiçi</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="container py-8">
+        <!-- Bildirim Durumu Kartı -->
+        <div class="card mb-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800 mb-1">
+                Bildirimler
+              </h2>
+              <p class="text-gray-600">Servis talepleri için hazır</p>
+            </div>
+            <div class="notification-icon active">🔔</div>
+          </div>
+        </div>
+
+        <!-- Debug Log Kartı -->
+        <div id="debug-log-card" class="card mb-6 bg-gray-50 border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">🔍 Debug Log</h3>
+          <div
+            id="debug-log"
+            class="text-xs font-mono text-gray-700 max-h-48 overflow-y-auto space-y-1"
+          >
+            <div class="text-gray-500">Sistem başlatılıyor...</div>
+          </div>
+        </div>
+
+        <!-- Son Talep Kartı -->
+        <div id="last-request-card" class="card hidden">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">Son Talep</h3>
+          <div class="request-info">
+            <div class="request-salon">
+              <span class="label">Salon:</span>
+              <span id="last-salon" class="value">-</span>
+            </div>
+            <div class="request-time">
+              <span class="label">Zaman:</span>
+              <span id="last-time" class="value">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bilgi Kartı -->
+        <div class="card bg-blue-50 border-blue-200">
+          <div class="text-center">
+            <p class="text-blue-800 font-medium mb-2">💡 Nasıl Çalışır?</p>
+            <p class="text-blue-700 text-sm">
+              Toplantı salonlarından servis talebi geldiğinde anında bildirim
+              alacaksınız. Uygulama arka planda çalışırken bile bildirimler
+              gelecektir.
+            </p>
+          </div>
+        </div>
+
+        <!-- PWA Kurulum Bilgisi -->
+        <div
+          id="install-prompt"
+          class="card bg-green-50 border-green-200 hidden"
+        >
+          <div class="text-center">
+            <p class="text-green-800 font-medium mb-2">📱 Ana Ekrana Ekle</p>
+            <p class="text-green-700 text-sm mb-3">
+              Daha kolay erişim için uygulamayı ana ekranınıza ekleyebilirsiniz
+            </p>
+            <button id="install-btn" class="btn-secondary">
+              Ana Ekrana Ekle
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Hata Ekranı -->
+    <div id="error-screen" class="screen hidden">
+      <div class="container text-center">
+        <div class="text-6xl mb-4">⚠️</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Bir Sorun Oluştu</h2>
+        <p id="error-message" class="text-gray-600 mb-6">
+          Bildirim izni alınamadı
+        </p>
+        <button id="retry-permission-btn" class="btn-primary">
+          Tekrar Dene
+        </button>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+
+    <!-- Configuration -->
+    <script src="../config.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+  </body>
+</html>

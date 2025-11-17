@@ -1,0 +1,44 @@
+{
+  "rules": {
+    "service-requests": {
+      ".read": false,
+      ".write": true,
+      "$requestId": {
+        ".validate": "newData.hasChildren(['salon', 'timestamp', 'type'])",
+        "salon": {
+          ".validate": "newData.isString() && (newData.val() === 'Barnabas' || newData.val() === 'Zefiros' || newData.val() === 'Kourion' || newData.val() === 'Karmi')"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "type": {
+          ".validate": "newData.val() === 'service-request'"
+        }
+      }
+    },
+    "subscriptions": {
+      ".read": false,
+      ".write": true,
+      "$subscriptionId": {
+        ".validate": "newData.hasChildren(['token', 'topic', 'timestamp'])",
+        "token": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "topic": {
+          ".validate": "newData.val() === 'service-requests'"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    "notifications": {
+      ".read": false,
+      ".write": true
+    },
+    "statistics": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

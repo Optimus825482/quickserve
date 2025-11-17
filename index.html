@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickServe - Merit Royal Diamond Otel</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <img
+          src="images/Diamond_Logo.png"
+          alt="Merit Royal Diamond"
+          class="h-24 mx-auto mb-6"
+        />
+        <h1 class="text-5xl font-bold text-gray-800 mb-4">QuickServe</h1>
+        <p class="text-xl text-gray-600">Dijital Servis Talep Sistemi</p>
+      </div>
+
+      <!-- Ana Kartlar -->
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <!-- Tablet Arayüzü Kartı -->
+        <a href="tablet/" class="block">
+          <div
+            class="bg-white rounded-2xl shadow-xl p-8 transition-all hover:shadow-2xl hover:scale-105 cursor-pointer"
+          >
+            <div class="text-6xl mb-4 text-center">📱</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3 text-center">
+              Tablet Arayüzü
+            </h2>
+            <p class="text-gray-600 text-center mb-4">
+              Toplantı salonlarındaki tabletler için servis talep arayüzü
+            </p>
+            <div class="bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
+              <strong>Özellikler:</strong>
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>4 salon seçeneği</li>
+                <li>Tek tuşla servis talebi</li>
+                <li>Anında bildirim gönderimi</li>
+              </ul>
+            </div>
+          </div>
+        </a>
+
+        <!-- Personel PWA Kartı -->
+        <a href="staff/" class="block">
+          <div
+            class="bg-white rounded-2xl shadow-xl p-8 transition-all hover:shadow-2xl hover:scale-105 cursor-pointer"
+          >
+            <div class="text-6xl mb-4 text-center">👨‍💼</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3 text-center">
+              Personel PWA
+            </h2>
+            <p class="text-gray-600 text-center mb-4">
+              Servis personeli için mobil bildirim uygulaması
+            </p>
+            <div class="bg-green-50 rounded-lg p-3 text-sm text-green-800">
+              <strong>Özellikler:</strong>
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>Anlık push bildirimleri</li>
+                <li>Offline çalışma desteği</li>
+                <li>Ana ekrana ekleme (PWA)</li>
+              </ul>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Bilgi Kartları -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="text-4xl mb-3 text-center">🏛️</div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2 text-center">
+            4 Salon
+          </h3>
+          <p class="text-sm text-gray-600 text-center">
+            Barnabas, Zefiros, Kourion, Karmi
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="text-4xl mb-3 text-center">⚡</div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2 text-center">
+            Anında İletim
+          </h3>
+          <p class="text-sm text-gray-600 text-center">
+            Firebase Cloud Messaging ile < 3 saniye
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="text-4xl mb-3 text-center">🔒</div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2 text-center">
+            Güvenli
+          </h3>
+          <p class="text-sm text-gray-600 text-center">
+            Veri kaydedilmez, KVKK uyumlu
+          </p>
+        </div>
+      </div>
+
+      <!-- Nasıl Çalışır -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Nasıl Çalışır?
+        </h2>
+
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              1
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">Salon Seçimi</h3>
+              <p class="text-gray-600">
+                Toplantı katılımcısı tablet üzerinden salonunu seçer
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              2
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">Talep Gönderimi</h3>
+              <p class="text-gray-600">
+                "Servis Talep Et" butonuna basarak talebi gönderir
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              3
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">Anlık Bildirim</h3>
+              <p class="text-gray-600">
+                Tüm servis personeline anında push bildirimi gönderilir
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold"
+            >
+              4
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">Hizmet</h3>
+              <p class="text-gray-600">
+                Personel ilgili salona giderek hizmeti sağlar
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teknik Detaylar -->
+      <div
+        class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-xl p-8 text-white"
+      >
+        <h2 class="text-3xl font-bold mb-6 text-center">Teknik Özellikler</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-semibold mb-3 text-lg">Frontend</h3>
+            <ul class="space-y-2 text-blue-100">
+              <li>✓ HTML5, CSS3, JavaScript</li>
+              <li>✓ Tailwind CSS</li>
+              <li>✓ Responsive Design</li>
+              <li>✓ PWA (Progressive Web App)</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-semibold mb-3 text-lg">Backend</h3>
+            <ul class="space-y-2 text-blue-100">
+              <li>✓ Firebase Cloud Messaging</li>
+              <li>✓ Firebase Realtime Database</li>
+              <li>✓ Firebase Cloud Functions</li>
+              <li>✓ Service Worker API</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center mt-12">
+        <img src="assets/opti.png" alt="Opti Logo" class="h-12 mx-auto mb-4" />
+        <p class="text-gray-600 mb-2">© 2024 Merit Royal Diamond Otel</p>
+        <p class="text-sm text-gray-500">
+          QuickServe - Dijital Servis Deneyimi
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
