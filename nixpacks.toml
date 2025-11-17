@@ -1,0 +1,14 @@
+# QuickServe - Nixpacks Configuration
+# Python Flask Application
+
+[phases.setup]
+nixPkgs = ["python313", "pip"]
+
+[phases.install]
+cmds = ["pip install -r requirements.txt"]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "python app.py"
