@@ -7,7 +7,7 @@
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
       ? "http://localhost:3000"
-      : "http://osc00wk0gkwwcss4c4skwggs.185.9.38.66.sslip.io";
+      : "http://dsgoowkscc8oc4g8o8oss4ko.185.9.38.66.sslip.io";
 
   console.log("🔧 QuickServe API URL:", window.QUICKSERVE_API_URL);
 })();
