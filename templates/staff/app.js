@@ -101,7 +101,9 @@ class NotificationManager {
     try {
       // Service Worker'ı kaydet
       addDebugLog("Service Worker kaydediliyor...", "info");
-      const registration = await navigator.serviceWorker.register("sw.js");
+      const registration = await navigator.serviceWorker.register(
+        "/templates/staff/sw.js"
+      );
       console.log("✅ Service Worker kaydedildi");
       addDebugLog("Service Worker kaydedildi", "success");
 
