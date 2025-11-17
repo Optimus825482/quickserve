@@ -282,19 +282,19 @@ retryBtn.addEventListener("click", () => {
   }
 });
 
-// Firebase'i başlat
+// Sistemi başlat
 async function init() {
   try {
     console.log("🚀 QuickServe Tablet başlatılıyor...");
 
-    // Firebase'i initialize et
-    const { app, messaging: msg } = await initializeFirebase();
-    messaging = msg;
+    // Firebase devre dışı (sadece backend API kullanılıyor)
+    await initializeFirebase();
 
     console.log("✅ Sistem hazır");
   } catch (error) {
     console.error("❌ Başlatma hatası:", error);
-    alert("Sistem başlatılamadı. Lütfen sayfayı yenileyin.");
+    // Hata olsa bile devam et
+    console.log("⚠️ Firebase olmadan devam ediliyor");
   }
 }
 

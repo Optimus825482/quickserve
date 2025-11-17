@@ -16,23 +16,14 @@ const firebaseConfig = {
 const vapidKey =
   "BBrNGl2-VPA-iuLasrj8jpS2Sj2FrYr-FQq57GET6ofRV4QOljRwyLg--HMI-bV7m-lmdBk5NJxSyy3nVpNLzA4";
 
-// Firebase'i initialize et
+// Firebase'i initialize et (Tablet için devre dışı)
 async function initializeFirebase() {
-  let app;
-  let messaging;
   try {
-    // Firebase App'i başlat
-    app = firebase.initializeApp(firebaseConfig);
-    console.log("✅ Firebase initialized");
-
-    // FCM'i başlat
-    messaging = firebase.messaging();
-    console.log("✅ Firebase Messaging initialized");
-
-    return { app, messaging };
+    console.log("ℹ️ Firebase disabled for tablet (only backend API used)");
+    return { app: null, messaging: null };
   } catch (error) {
     console.error("❌ Firebase initialization error:", error);
-    throw error;
+    return { app: null, messaging: null };
   }
 }
 
